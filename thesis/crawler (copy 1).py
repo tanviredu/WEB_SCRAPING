@@ -13,7 +13,7 @@ class Price_compare:
     def __init__(self, master):
         self.var = StringVar()
         #self.var_ebay = StringVar()
-        self.var_flipkart = StringVar()
+        self.var_bagdoom = StringVar()
         self.var_daraz = StringVar()
         #self.var_amzn = StringVar()
 
@@ -31,10 +31,10 @@ class Price_compare:
         self.product_arr = self.product.split()
         self.n = 1
         self.key = ""
-        self.title_flip_var = StringVar()
+        self.title_bagdoom_var = StringVar()
         self.title_daraz_var = StringVar()
         self.variable_daraz = StringVar()
-        self.variable_flip = StringVar()
+        self.variable_bagdoom = StringVar()
 
         for word in self.product_arr:
             if self.n == 1:
@@ -46,14 +46,14 @@ class Price_compare:
 
         self.window = Toplevel(root)
         self.window.title('Price Comparison Engine')
-        label_title_flip = Label(self.window, text='Flipkart Title:')
-        label_title_flip.grid(row=0, column=0, sticky=W)
+        label_title_bagdoom = Label(self.window, text='bagdoom Title:')
+        label_title_bagdoom.grid(row=0, column=0, sticky=W)
 
-        label_flipkart = Label(self.window, text='Flipkart price (Rs):')
-        label_flipkart.grid(row=1, column=0, sticky=W)
+        label_bagdoom = Label(self.window, text='Bagdoom price (Rs):')
+        label_bagdoom.grid(row=1, column=0, sticky=W)
 
-        entry_flipkart = Entry(self.window, textvariable=self.var_flipkart)
-        entry_flipkart.grid(row=1, column=1, sticky=W)
+        entry_bagdoom = Entry(self.window, textvariable=self.var_bagdoom)
+        entry_bagdoom.grid(row=1, column=1, sticky=W)
 
         label_title_daraz = Label(self.window, text='Daraz Title:')
         label_title_daraz.grid(row=3, column=0, sticky=W)
@@ -64,7 +64,7 @@ class Price_compare:
         entry_daraz = Entry(self.window, textvariable=self.var_daraz)
         entry_daraz.grid(row=4, column=1, sticky=W)
 
-        self.price_flipkart(self.key)
+        self.price_bagdoom(self.key)
         self.price_daraz(self.key)
 
         try:
@@ -72,9 +72,9 @@ class Price_compare:
         except:
             self.variable_daraz.set('Product not available')
         try:
-            self.variable_flip.set(self.matches_flip[0])
+            self.variable_bagdoom.set(self.matches_bagdoom[0])
         except:
-            self.variable_flip.set('Product not available')
+            self.variable_bagdoom.set('Product not available')
 
         option_daraz = OptionMenu(self.window, self.variable_daraz, *self.matches_daraz)
         option_daraz.grid(row=3, column=1, sticky=W)
@@ -82,11 +82,11 @@ class Price_compare:
         lab_daraz = Label(self.window, text='Not this? Try out suggestions by clicking on the title')
         lab_daraz.grid(row=3, column=2, padx=4)
 
-        option_flip = OptionMenu(self.window, self.variable_flip, *self.matches_flip)
-        option_flip.grid(row=0, column=1, sticky=W)
+        option_bagdoom = OptionMenu(self.window, self.variable_bagdoom, *self.matches_bagdoom)
+        option_bagdoom.grid(row=0, column=1, sticky=W)
 
-        lab_flip = Label(self.window, text='Not this? Try out suggestions by clicking on the title')
-        lab_flip.grid(row=0, column=2, padx=4)
+        lab_bagdoom = Label(self.window, text='Not this? Try out suggestions by clicking on the title')
+        lab_bagdoom.grid(row=0, column=2, padx=4)
 
         button_search = Button(self.window, text='Search', command=self.search, bd=4)
         button_search.grid(row=2, column=2, sticky=E, padx=10, pady=4)
@@ -94,49 +94,60 @@ class Price_compare:
         button_daraz_visit = Button(self.window, text='Visit Site', command=self.visit_daraz, bd=4)
         button_daraz_visit.grid(row=4, column=2, sticky=W)
 
-        button_flip_visit = Button(self.window, text='Visit Site', command=self.visit_flip, bd=4)
-        button_flip_visit.grid(row=1, column=2, sticky=W)
+        button_bagdoom_visit = Button(self.window, text='Visit Site', command=self.visit_flip, bd=4)
+        button_bagdoom_visit.grid(row=1, column=2, sticky=W)
 
         ## upto this point everything works fine
 
-
-    def price_flipkart(self, key):
-        url_flip = 'https://www.flipkart.com/search?q=' + str(
-            key) + '&marketplace=FLIPKART&otracker=start&as-show=on&as=off'
+    def price_bagdoom(self, key):
+        url_bagdoom = 'https://www.bagdoom.com/catalogsearch/result/?q=' + str(
+            key)
 
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
         title_arr = []
-        self.opt_title_flip = StringVar()
-        source_code = requests.get(url_flip, headers=self.headers)
+        self.opt_title_bagdoom = StringVar()
+        source_code = requests.get(url_bagdoom, headers=self.headers)
         plain_text = source_code.text
-        self.soup_flip = BeautifulSoup(plain_text, "html.parser")
-        for title in self.soup_flip.find_all('div', {'class': '_3wU53n'}):
-            title_arr.append(title.text)
-
+        self.soup_bagdoom = BeautifulSoup(plain_text, "lxml")
+        items = self.soup_bagdoom.findAll('div', attrs={'class':'catalog_hover'})
+        for title in items:
+            a=title.find('h2', attrs={'class':'product-name'}).text.strip()
+            title_arr.append(a)
+            b=title.find('div', attrs={'class':'price-box'}).text[:20].strip()
+            self.var_daraz.set(b)
         user_input = self.var.get().title()
 
-        self.matches_flip = get_close_matches(user_input, title_arr, 20, 0.1)
+        self.matches_bagdoom = get_close_matches(user_input, title_arr, 20, 0.1)
         try:
-            self.opt_title_flip.set(self.matches_flip[0])
+            self.opt_title_bagdoom.set(self.matches_bagdoom[0])
         except IndexError:
-            self.opt_title_flip.set('Product not found')
+            self.opt_title_bagdoom.set('Product not found')
+
         try:
 
             ## finding the individual search this may or may not working every time
-            for div in self.soup_flip.find_all('a', {'class': '_31qSD5'}):
-                for each in div.find_all('div', {'class': '_3wU53n'}):
-                    if each.text == self.opt_title_flip.get():
-                        self.link_flip = 'https://www.flipkart.com' + div.get('href')
+       #     for div in self.soup_flip.find_all('a', {'class': '_31qSD5'}):
+       #         for each in div.find_all('div', {'class': '_3wU53n'}):
+       #             if each.text == self.opt_title_flip.get():
+       #                 self.link_flip = 'https://www.flipkart.com' + div.get('href')
 
-            product_source_code = requests.get(self.link_flip, headers=self.headers)
-            product_plain_text = product_source_code.text
-            product_soup = BeautifulSoup(product_plain_text, "html.parser")
-            for price in product_soup.find_all('div', {'class': '_1vC4OE _3qQ9m1'}):
-                self.var_flipkart.set(price.text[1:] + '.00')
+       #     product_source_code = requests.get(self.link_flip, headers=self.headers)
+       #     product_plain_text = product_source_code.text
+       #     product_soup = BeautifulSoup(product_plain_text, "html.parser")
+
+            prices=[]
+            ans2= self.soup_bagdoom.findAll('div', attrs={'class':'catalog_hover'})
+            for item in ans2:
+                prices.append(item.find('div', attrs={'class':'price-box'}).text[:20].strip())
+            
+
+
+            print (prices)
+            for price in prices:
+                self.var_bagdoom.set(price + '.00')
         except UnboundLocalError:
             pass
-
     def price_daraz(self, key):
         url_daraz = "https://www.daraz.com.bd/catalog/?q="+str(key)+"&_keyori=ss&from=input&spm=a2a0e.searchlist.search.go.34001d3evRxuRK"
 
@@ -238,8 +249,8 @@ class Price_compare:
             self.var_amzn.set('None')
             self.title_amzn_var.set('product not available')
 
-        flip_get = self.variable_flip.get()
-        self.opt_title_flip.set(flip_get)
+        bagdoom_get = self.variable_bagdoom.get()
+        self.opt_title_bagdoom.set(bagdoom_get)
 
         try:
             for div in self.soup_flip.find_all('a', {'class': '_31qSD5'}):
