@@ -1,0 +1,32 @@
+<!-- we extend the base html-->
+    {% extends 'public/base.html' %}
+
+    {% block content %}
+
+    <style>
+    
+    </style>
+
+    <!-- hrere goes the form -->
+    <div class="text-center">
+        <div class="jumbotron">
+            <h1 class="display-5">Ecommerce info Parser</h1>
+            <p class="lead">Search Product</p>
+            <hr class="my-2">
+            <form action="/main/process/" method="POST">
+                {% csrf_token %}
+                <div class="md-form mt-0">
+                    <input class="form-control" type="text" name="keyword" placeholder="Search" aria-label="Search">
+                    <br/>
+                    <input type="submit" class="btn btn-primary btn-lg " value="Search">
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    
+
+
+
+    {% endblock %}

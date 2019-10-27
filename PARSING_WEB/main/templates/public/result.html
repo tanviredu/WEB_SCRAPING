@@ -1,0 +1,91 @@
+{% extends 'public/base.html' %}
+
+{% block content %}
+
+<div class="text-center">
+        <div class="jumbotron">
+            <h1 class="display-5">Partial Match Found</h1>
+        </div>
+</div>
+<div class="row">
+
+<div class="col-sm-4">
+<div class="jumbotron jumbotron-fluid">
+<table class="table table-dark">
+<h3>bagdoom</h3><a href="{{url1}}" class="btn btn-danger">Go to Bagdoom</a>
+
+  <thead>
+    <tr>
+      
+      <th scope="col">ITEM</th>
+      <th scope="col">PRICE</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for x,y in text1.items %}
+
+
+<tr>
+      
+      <td>{{x}}</td>
+      <td>{{y}}</td>
+      
+    </tr>
+
+
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+
+
+<div class="col-sm-4">
+<div class="jumbotron jumbotron-fluid">
+<table class="table table-dark">
+<h3>DARAZ</h3><a href="{{url2}}" class="btn btn-danger">Go to Daraz</a>
+  <thead>
+    <tr>
+      
+      <th scope="col">ITEM</th>
+      <th scope="col">PRICE</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for x,y in text2.items %}
+
+
+<tr>
+      
+      <td>{{x}}</td>
+      <td>{{y}}</td>
+      
+    </tr>
+
+
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+</div>
+
+
+
+
+
+
+
+
+</div>
+{% endblock %}
+
+
+
+
+
+
+ 
+  
+    
