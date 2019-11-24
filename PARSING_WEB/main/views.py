@@ -92,9 +92,13 @@ def walmart(keyword):
     url='https://www.walmart.com/search/?query='+str(keyword)
     r = requests.get(url)
     soup = BeautifulSoup(r.content, 'lxml')
+    ans= soup.findAll('ul', attrs={'class':'search-result-gridview-items four-items'})
     name=[]
     for node in soup.findAll('a', attrs={'class':'product-title-link line-clamp line-clamp-2'}):
         name.append(node.find('span').text.strip())
+    for node in soup.findAll('span', attrs={'class':'price price-main'}):
+    #print (node.find('span',attrs={'class':'price-characteristic'}).text)
+        print ("---")
     price=[]
     for item in soup.findAll('a', attrs={'class':'product-title-link line-clamp line-clamp-2'}):
         price.append(node.span.text)
