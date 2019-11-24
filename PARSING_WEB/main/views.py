@@ -22,7 +22,7 @@ def Bagdoom(keyword):
     d={}
     for item in ans2:
         a=item.find('h2', attrs={'class':'product-name'}).text.strip()
-        b=item.find('div', attrs={'class':'price-box'}).text[:20].strip()
+        b=item.find('span', attrs={'class':'price'}).text.strip()
         d.update({a:b})
     return d,url
 
@@ -54,6 +54,61 @@ def daraz(keyword):
     return e,url
 # processing a preety url
 
+def rokomari(keyword):
+    url="https://www.rokomari.com/search?term="+str(keyword)
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, 'lxml')
+    ## adding the name
+    name=[]
+    for node in soup.findAll('div', attrs={'class':'browse__content-books-wrapper'}):
+        for item in (node.findAll('p',attrs={'class':'book-title'})):
+            name.append(item.text)
+    result=[]
+    for node in soup.findAll('div', attrs={'class':'browse__content-books-wrapper'}):
+        for item in (node.findAll('p',attrs={'class':'book-price'})):
+            result.append(item.text.strip())
+    f={}
+    for x,y in zip(name,result):
+        f.update({x:y})
+    return f,url    
+
+
+def craiglist(keyword):
+    url='https://newjersey.craigslist.org/search/sss?query='+str(keyword)+'&sort=rel'
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, 'lxml')
+    name=[]
+    for node in soup.findAll('p',attrs={'class':'result-info'}):
+        name.append((node.find('a').text))
+    result=[]
+    for node in soup.findAll('span',attrs={'class':'result-price'}):
+        result.append((node.text))
+    g={}
+    for x,y in zip(name,result):
+        g.update({x:y})
+    return g,url
+
+def walmart(keyword):
+    url='https://www.walmart.com/search/?query='+str(keyword)
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, 'lxml')
+    name=[]
+    for node in soup.findAll('a', attrs={'class':'product-title-link line-clamp line-clamp-2'}):
+        name.append(node.find('span').text.strip())
+    price=[]
+    for item in soup.findAll('a', attrs={'class':'product-title-link line-clamp line-clamp-2'}):
+        price.append(node.span.text)
+    m={}
+    for x,y in zip(name,price):
+        m.update({x:y})
+    return m,url
+        
+    
+
+    
+
+
+
 def process(request):
     if request.method == "POST":
         ## take the value
@@ -61,8 +116,12 @@ def process(request):
         ##return HttpResponse(keyword)
         text1,url1 = Bagdoom(keyword)
         text2,url2 = daraz(keyword)
+        ## adding the rokomari
+        text3,url3 = rokomari(keyword)
+        text4,url4 = craiglist(keyword)
+        text5,url5 = walmart(keyword)
         
-        context = {'text1':text1,'text2':text2,'url1':url1,'url2':url2}
+        context = {'text1':text1,'text2':text2,'text3':text3,'text4':text4,'text5':text5,'url1':url1,'url2':url2,'url3':url3,'url4':url4,'url5':url5}
         return render(request,'public/result.html',context)
         #text=daraz(keyword)
         #return HttpResponse(text)
