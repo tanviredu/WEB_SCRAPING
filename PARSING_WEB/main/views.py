@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 
 ## import json for parsing
 import json
+import pandas as pd
 
 ## add searching by doing to the website using http response
 
@@ -116,11 +117,21 @@ def process(request):
         keyword = str(request.POST['keyword'])
         ##return HttpResponse(keyword)
         text1,url1 = Bagdoom(keyword)
+        data1=pd.Series(text1).to_frame()
+        pd.DataFrame(data1).to_csv('bagdoom.csv')
         text2,url2 = daraz(keyword)
+        data2=pd.Series(text2).to_frame()
+        pd.DataFrame(data2).to_csv('daraz.csv')
         ## adding the rokomari
         text3,url3 = rokomari(keyword)
+        data3=pd.Series(text3).to_frame()
+        pd.DataFrame(data3).to_csv('rokomari.csv')
         text4,url4 = craiglist(keyword)
+        data4=pd.Series(text4).to_frame()
+        pd.DataFrame(data4).to_csv('craglist.csv')
         text5,url5 = walmart(keyword)
+        data5=pd.Series(text5).to_frame()
+        pd.DataFrame(data5).to_csv('walmart.csv')
         
         context = {'text1':text1,'text2':text2,'text3':text3,'text4':text4,'text5':text5,'url1':url1,'url2':url2,'url3':url3,'url4':url4,'url5':url5}
         return render(request,'public/result.html',context)
