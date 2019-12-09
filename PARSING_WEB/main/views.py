@@ -375,58 +375,59 @@ def process(request):
         pd.DataFrame(data5).to_csv('walmart.csv')
 
 
-        text6,url6 = shadmart(keyword)
-        data6=pd.Series(text6).to_frame()
-        pd.DataFrame(data6).to_csv('shadmart.csv')
+        #text6,url6 = shadmart(keyword)
+        #data6=pd.Series(text6).to_frame()
+        #pd.DataFrame(data6).to_csv('shadmart.csv')
 
 
 
-        text7,url7 = paytm(keyword)
-        data7=pd.Series(text7).to_frame()
-        pd.DataFrame(data7).to_csv('paytm.csv')
+        #text7,url7 = paytm(keyword)
+        #data7=pd.Series(text7).to_frame()
+        #pd.DataFrame(data7).to_csv('paytm.csv')
 
 
-        text8,url8 = shopclus(keyword)
-        data8=pd.Series(text8).to_frame()
-        pd.DataFrame(data8).to_csv('shopclues.csv')
+        #text8,url8 = shopclus(keyword)
+        #data8=pd.Series(text8).to_frame()
+        #pd.DataFrame(data8).to_csv('shopclues.csv')
 
 
-        text9,url9 = ofuronto(keyword)
-        data9=pd.Series(text9).to_frame()
-        pd.DataFrame(data9).to_csv('ofuronto.csv')
+        #text9,url9 = ofuronto(keyword)
+        #data9=pd.Series(text9).to_frame()
+        #pd.DataFrame(data9).to_csv('ofuronto.csv')
 
 
-        text10,url10 = priyoshop(keyword)
-        data10=pd.Series(text10).to_frame()
-        pd.DataFrame(data10).to_csv('prioshop.csv')
+        #text10,url10 = priyoshop(keyword)
+        #data10=pd.Series(text10).to_frame()
+        #pd.DataFrame(data10).to_csv('prioshop.csv')
 
-        text11,url11 = allmartbd(keyword)
-        data11=pd.Series(text11).to_frame()
-        pd.DataFrame(data11).to_csv('allmartbd.csv')
+        #text11,url11 = allmartbd(keyword)
+        #data11=pd.Series(text11).to_frame()
+        #pd.DataFrame(data11).to_csv('allmartbd.csv')
 
 
-        text12,url12 = edokander(keyword)
-        data12=pd.Series(text12).to_frame()
-        pd.DataFrame(data12).to_csv('edokander.csv')
+        #text12,url12 = edokander(keyword)
+        #data12=pd.Series(text12).to_frame()
+        #pd.DataFrame(data12).to_csv('edokander.csv')
 
-        text13,url13 = clickxo(keyword)
-        data13=pd.Series(text13).to_frame()
-        pd.DataFrame(data13).to_csv('clickxo.csv')
+        #text13,url13 = clickxo(keyword)
+        #data13=pd.Series(text13).to_frame()
+        #pd.DataFrame(data13).to_csv('clickxo.csv')
 
-        text14,url14 = megashop(keyword)
-        data14=pd.Series(text14).to_frame()
-        pd.DataFrame(data14).to_csv('megashop.csv')
+        #text14,url14 = megashop(keyword)
+        #data14=pd.Series(text14).to_frame()
+        #pd.DataFrame(data14).to_csv('megashop.csv')
 
-        text15,url15 = ponnobd(keyword)
-        data15=pd.Series(text15).to_frame()
-        pd.DataFrame(data15).to_csv('ponnobd.csv')
+        #text15,url15 = ponnobd(keyword)
+        #data15=pd.Series(text15).to_frame()
+        #pd.DataFrame(data15).to_csv('ponnobd.csv')
 
-        text16,url16 = sonalibazar(keyword)
-        data16=pd.Series(text16).to_frame()
-        pd.DataFrame(data16).to_csv('sonalibazar.csv')
+        #text16,url16 = sonalibazar(keyword)
+        #data16=pd.Series(text16).to_frame()
+        #pd.DataFrame(data16).to_csv('sonalibazar.csv')
 
         
-        context = {'text1':text1,'text2':text2,'text3':text3,'text4':text4,'text5':text5,'text6':text6,'text7':text7,'text8':text8,'text9':text9,'text10':text10,'text11':text11,'text12':text12,'text13':text13,'text14':text14,'text15':text15,'text16':text16,'text5':text5,'url1':url1,'url2':url2,'url3':url3,'url4':url4,'url5':url5,'url6':url6,'url7':url7,'url8':url8,'url9':url9,'url10':url10,'url11':url11,'url12':url12,'url13':url13,'url14':url14,'url15':url15,'url16':url16}
+        #context = {'text1':text1,'text2':text2,'text3':text3,'text4':text4,'text5':text5,'text6':text6,'text7':text7,'text8':text8,'text9':text9,'text10':text10,'text11':text11,'text12':text12,'text13':text13,'text14':text14,'text15':text15,'text16':text16,'url1':url1,'url2':url2,'url3':url3,'url4':url4,'url5':url5,'url6':url6,'url7':url7,'url8':url8,'url9':url9,'url10':url10,'url11':url11,'url12':url12,'url13':url13,'url14':url14,'url15':url15,'url16':url16}
+        context = {'text1':text1,'text2':text2,'text3':text3,'text4':text4,'text5':text5,'url1':url1,'url2':url2,'url3':url3,'url4':url4,'url5':url5}
         return render(request,'public/result.html',context)
         #text=daraz(keyword)
         #return HttpResponse(text)
