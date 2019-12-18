@@ -143,21 +143,21 @@ def shopclus(keyword):
 
 
 
-# def paytm(keyword):
-#     url="https://paytm.com/shop/search?q="+str(keyword)
-#     r = requests.get(url)
-#     soup = BeautifulSoup(r.content, 'lxml')
-#     ans= soup.findAll('ul', attrs={'class':'search-result-gridview-items'})
-#     name=[]
-#     for item in soup.findAll('div', attrs={'class':'_2apC'}):
-#         name.append(item.text.strip())
-#     price=[]
-#     for item in soup.findAll('span', attrs={'class':'_1kMS'}):
-#         price.append(item.text.strip())
-#     m={}
-#     for x,y in zip(name,price):
-#         m.update({x:y})
-#     return m,url
+def paytm(keyword):
+    url="https://paytm.com/shop/search?q="+str(keyword)
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, 'lxml')
+    ans= soup.findAll('ul', attrs={'class':'search-result-gridview-items'})
+    name=[]
+    for item in soup.findAll('div', attrs={'class':'_2apC'}):
+        name.append(item.text.strip())
+    price=[]
+    for item in soup.findAll('span', attrs={'class':'_1kMS'}):
+        price.append(item.text.strip())
+    m={}
+    for x,y in zip(name,price):
+        m.update({x:y})
+    return m,url
 
 
 
@@ -381,9 +381,9 @@ def process(request):
 
 
 
-        #text7,url7 = paytm(keyword)
-        #data7=pd.Series(text7).to_frame()
-        #pd.DataFrame(data7).to_csv('paytm.csv')
+        text7,url7 = paytm(keyword)
+        data7=pd.Series(text7).to_frame()
+        pd.DataFrame(data7).to_csv('paytm.csv')
 
 
         text8,url8 = shopclus(keyword)
@@ -426,7 +426,7 @@ def process(request):
         #pd.DataFrame(data16).to_csv('sonalibazar.csv')
 
         
-        context = {'text1':text1,'text2':text2,'text5':text5,'text6':text6,'text8':text8,'text9':text9,'text10':text10,'text12':text12,'text13':text13,'url1':url1,'url2':url2,'url5':url5,'url6':url6,'url8':url8,'url9':url9,'url10':url10,'url12':url12,'url13':url13}
+        context = {'text1':text1,'text2':text2,'text5':text5,'text6':text6,'text7':text7,'text8':text8,'text9':text9,'text10':text10,'text12':text12,'text13':text13,'url1':url1,'url2':url2,'url5':url5,'url6':url6,'url7':url7,'url8':url8,'url9':url9,'url10':url10,'url12':url12,'url13':url13}
         #context = {'text1':text1,'text2':text2,'text3':text3,'text4':text4,'text5':text5,'url1':url1,'url2':url2,'url3':url3,'url4':url4,'url5':url5}
         return render(request,'public/result.html',context)
         #text=daraz(keyword)
